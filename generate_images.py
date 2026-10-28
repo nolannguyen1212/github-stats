@@ -177,6 +177,9 @@ async def main() -> None:
             exclude_langs=excluded_langs,
             ignore_forked_repos=ignore_forked_repos,
         )
+        # get_stats() resets its fields before fetching, so populate them once
+        # up front instead of letting both cards race to read partial results
+        await s.get_stats()
         await asyncio.gather(
             generate_languages(s, user), generate_overview(s, user)
         )
