@@ -7,126 +7,132 @@
 <img src="generated/languages.svg" alt="languages" width="49%" />
 </p>
 
-Repo này generate các SVG phong cách **terminal / Matrix green** cho GitHub
-profile bằng GitHub Actions — không cần server, chạy hằng ngày, và đọc được cả
-dữ liệu **private repo** nhờ Personal Access Token của chính bạn.
+This repository generates **terminal / Matrix-green** SVG cards for a GitHub
+profile using GitHub Actions — no server required, refreshed daily, and able
+to include **private repository** data through your own Personal Access Token.
 
-Fork từ [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
-(GPL-3.0), đã viết lại template và thêm contribution snake.
+Forked from [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
+(GPL-3.0), with rewritten templates plus pinned-repo cards, a contribution
+heatmap and a contribution snake.
 
-## Cấu trúc
+## Layout
 
-| Đường dẫn | Mô tả |
+| Path | Description |
 |---|---|
-| `templates/overview.svg` | Template card thống kê (stars, forks, contributions, lines changed, views, repos) |
-| `templates/languages.svg` | Template card ngôn ngữ — top 6, dạng thanh ASCII `█░` |
-| `templates/pinned.svg` | Lưới card cho các repo đang pin trên profile (tối đa 6, tự cập nhật khi đổi pin) |
-| `templates/contributions.svg` | Heatmap contribution 1 năm + current/longest streak, best day |
-| `generate_images.py` | Điền số liệu vào template → `generated/*.svg` |
-| `github_stats.py` | Gọi GitHub GraphQL/REST API để lấy số liệu |
-| `assets/header.svg` | Banner terminal có hiệu ứng gõ chữ (tĩnh, tự sửa nội dung) |
-| `generated/` | Output do Actions commit: `overview.svg`, `languages.svg`, `pinned.svg`, `contributions.svg`, `snake-dark.svg`, `snake-light.svg` |
-| `profile/README.md` | README hoàn chỉnh để copy sang repo profile |
-| `.github/workflows/main.yml` | Chạy mỗi ngày 00:05 UTC, khi push lên `master`, hoặc chạy tay |
+| `templates/overview.svg` | Summary card (stars, forks, contributions, lines changed, views, repos) |
+| `templates/languages.svg` | Top 6 languages as ASCII `█░` bars |
+| `templates/pinned.svg` | Grid of the repositories pinned on the profile (up to 6, follows pin changes) |
+| `templates/contributions.svg` | One-year contribution heatmap with current/longest streak and best day |
+| `generate_images.py` | Fills the templates with data → `generated/*.svg` |
+| `github_stats.py` | Queries the GitHub GraphQL/REST APIs |
+| `assets/header.svg` | Animated typing terminal banner (static, edit by hand) |
+| `generated/` | Committed by Actions: `overview.svg`, `languages.svg`, `pinned.svg`, `contributions.svg`, `snake-dark.svg`, `snake-light.svg` |
+| `profile/README.md` | Complete profile README to copy into the profile repository |
+| `.github/workflows/main.yml` | Runs daily at 00:05 UTC, on push to `master`, or manually |
 
-## Cài đặt
+## Setup
 
-### 1. Tạo Personal Access Token
+### 1. Create a Personal Access Token
 
-Workflow cần token riêng (token mặc định của Actions không đọc được dữ liệu
-user và private repo).
+The workflow needs its own token — the default Actions token cannot read user
+data or private repositories.
 
-**Classic token** (đơn giản nhất): *Settings → Developer settings → Personal
-access tokens → Tokens (classic) → Generate new token*
+**Classic token** (simplest): *Settings → Developer settings → Personal access
+tokens → Tokens (classic) → Generate new token*
 
-- Scopes: `repo` và `read:user`
-- Expiration: tuỳ bạn — nhớ gia hạn khi hết hạn, nếu không workflow sẽ fail
+- Scopes: `repo` and `read:user`
+- Expiration: your choice — renew it before it expires or the workflow will fail
 
-> Token mới tạo đôi khi mất vài phút mới hoạt động.
+> A freshly created token can take a few minutes to start working.
 
-### 2. Thêm secrets vào repo này
+### 2. Add repository secrets
 
 *Settings → Secrets and variables → Actions → New repository secret*
 
-| Secret | Bắt buộc | Ví dụ | Ý nghĩa |
+| Secret | Required | Example | Purpose |
 |---|---|---|---|
-| `ACCESS_TOKEN` | ✅ | `ghp_xxx…` | Token ở bước 1 |
-| `EXCLUDED` | | `nolannguyen1212/dotfiles,org/legacy-app` | Repo bỏ qua khi tính thống kê |
-| `EXCLUDED_LANGS` | | `HTML,CSS,Jupyter Notebook` | Ngôn ngữ ẩn khỏi card languages |
+| `ACCESS_TOKEN` | ✅ | `ghp_xxx…` | Token from step 1 |
+| `EXCLUDED` | | `nolannguyen1212/dotfiles,org/legacy-app` | Repositories to skip when computing stats |
+| `EXCLUDED_LANGS` | | `HTML,CSS,Jupyter Notebook` | Languages hidden from the languages card |
 
-Forked repo đã được loại trừ sẵn (`EXCLUDE_FORKED_REPOS: true` trong workflow).
+Forked repositories are already excluded (`EXCLUDE_FORKED_REPOS: true` in the
+workflow).
 
-> Gợi ý cho profile Go/backend: thêm `HTML,CSS,SCSS,Jupyter Notebook` vào
-> `EXCLUDED_LANGS` để card ngôn ngữ không bị lệch bởi file template/notebook.
+> Tip for a Go/backend profile: add `HTML,CSS,SCSS,Jupyter Notebook` to
+> `EXCLUDED_LANGS` so templates and notebooks don't skew the languages card.
 
-### 3. Bật quyền ghi cho Actions
+### 3. Allow Actions to write
 
 *Settings → Actions → General → Workflow permissions →* **Read and write
-permissions** → Save. (Workflow đã khai báo `permissions: contents: write`,
-nhưng một số tài khoản/org vẫn chặn ở mức repo.)
+permissions** → Save. (The workflow already declares
+`permissions: contents: write`, but some accounts/orgs still block it at the
+repository level.)
 
-### 4. Chạy workflow
+### 4. Run the workflow
 
-*Actions → Generate Stats Images → Run workflow*. Sau khoảng 1–3 phút, thư mục
-`generated/` sẽ có 4 file SVG mới. Từ đó trở đi workflow tự chạy mỗi ngày.
+*Actions → Generate Stats Images → Run workflow*. After 1–3 minutes,
+`generated/` contains the new SVGs. From then on the workflow runs daily.
 
-> Repo này phải **public** — README profile nhúng ảnh qua
-> `raw.githubusercontent.com`, URL này không truy cập được nếu repo private.
-> Dữ liệu private repo vẫn chỉ xuất hiện dưới dạng con số tổng hợp.
+> This repository must be **public** — the profile README embeds images via
+> `raw.githubusercontent.com`, which is not reachable for private repositories.
+> Private repository data only ever appears as aggregated numbers.
 
-### 5. Tạo profile README
+### 5. Create the profile README
 
-1. Tạo repo **public** tên trùng username: `nolannguyen1212/nolannguyen1212`
-   (GitHub sẽ hiện thông báo "special repository").
-2. Copy nội dung [`profile/README.md`](profile/README.md) vào `README.md` của
-   repo đó.
-3. Sửa các chỗ placeholder:
-   - email / LinkedIn trong hàng badge đầu trang
-   - khối `nolan.yaml` (role, domains, learning…)
-   - danh sách badge `~/stack` cho đúng công nghệ bạn dùng
+1. Create a **public** repository named after your username:
+   `nolannguyen1212/nolannguyen1212` (GitHub shows a "special repository"
+   notice).
+2. Copy [`profile/README.md`](profile/README.md) into that repository's
+   `README.md`.
+3. Adjust the personal parts:
+   - the link badges at the top
+   - the `nolan.yaml` block (role, domains, learning…)
+   - the `~/stack` badges to match the technologies you actually use
 
-## Tuỳ chỉnh
+## Customization
 
-**Pinned repos** — không cần sửa code: đổi pin trên trang profile GitHub, lần
-chạy workflow tiếp theo sẽ vẽ lại `pinned.svg`. Card lấy dữ liệu từ chính danh
-sách pin, nên đừng bỏ pin; các ô pin mặc định của GitHub vẫn hiện bên dưới
-README và không đổi giao diện được.
+**Pinned repos** — no code changes needed: change your pins on the GitHub
+profile and the next workflow run redraws `pinned.svg`. The card reads the pin
+list itself, so keep your repositories pinned; GitHub's default pin boxes still
+appear below the README and cannot be restyled.
 
-**Cài đặt profile nên bật** (Settings → Public profile): *Include private
-contributions on my profile* để heatmap đầy đủ hơn; tắt *Show Achievements* để
-sidebar gọn hơn.
+**Recommended profile settings** (Settings → Public profile): enable *Include
+private contributions on my profile* for a fuller heatmap; disable *Show
+Achievements* for a cleaner sidebar.
 
-**Header banner** — sửa text trong `assets/header.svg`. Mỗi dòng được "gõ" ra
-bằng cách animate độ rộng của một `clipPath`; nếu dòng lệnh dài hơn, tăng giá
-trị `to="520"` tương ứng (~8.4px mỗi ký tự).
+**Header banner** — edit the text in `assets/header.svg`. Each line is "typed"
+by animating the width of a `clipPath`; if you make a command longer, raise the
+matching `to="520"` value (~8.4px per character).
 
-**Màu** — palette dùng chung cho mọi file:
+**Colors** — palette shared by every file:
 
-| Token | Hex | Dùng cho |
+| Token | Hex | Used for |
 |---|---|---|
-| background | `#0a0f0a` | nền card |
-| title bar | `#0f1a10` | thanh tiêu đề |
-| phosphor | `#00ff41` | prompt, thanh ngôn ngữ, viền |
-| mid green | `#00c72c` | key, phần trăm |
-| bright text | `#b6ffc6` | giá trị |
-| dim | `#1f5f2c` | dấu chấm dẫn, thanh trống |
+| background | `#0a0f0a` | card background |
+| title bar | `#0f1a10` | window title bar |
+| phosphor | `#00ff41` | prompt, language bars, border |
+| mid green | `#00c72c` | keys, percentages |
+| bright text | `#b6ffc6` | values |
+| dim | `#1f5f2c` | dot leaders, empty bar track |
 
-**Số ngôn ngữ / độ dài thanh** — `MAX_LANGUAGES` và `BAR_WIDTH` ở đầu phần
-image generation trong `generate_images.py`.
+**Language count / bar length** — `MAX_LANGUAGES` and `BAR_WIDTH` near the top
+of the image generation section in `generate_images.py`.
 
-**Lịch chạy** — sửa `cron` trong `.github/workflows/main.yml`.
+**Schedule** — edit `cron` in `.github/workflows/main.yml`.
 
-## Lưu ý về độ chính xác
+## Accuracy notes
 
-- *Lines of code changed* và *views* lấy từ API thống kê của GitHub, có thể
-  thiếu ở lần chạy đầu và chính xác dần khi GitHub cache xong (xem
+- *Lines of code changed* and *views* come from GitHub's statistics APIs; they
+  may be incomplete on the first run and become more accurate as GitHub caches
+  the data (see
   [jstrieb#2](https://github.com/jstrieb/github-stats/issues/2),
   [#3](https://github.com/jstrieb/github-stats/issues/3),
   [#13](https://github.com/jstrieb/github-stats/issues/13)).
-- Views chỉ tính 14 ngày gần nhất và chỉ cho repo bạn có quyền push.
-- Nếu `aiohttp` ném exception, log trong tab Actions (public) có thể lộ **tên**
-  private repo. Cân nhắc điều này trước khi dùng token có scope `repo`.
+- Views cover only the last 14 days and only repositories you can push to.
+- If `aiohttp` raises an exception, the (public) Actions log may reveal the
+  **names** of private repositories. Keep this in mind before using a token
+  with the `repo` scope.
 
 ## License
 
-GPL-3.0 — xem [LICENSE](LICENSE). Code gốc © Jacob Strieb.
+GPL-3.0 — see [LICENSE](LICENSE). Original code © Jacob Strieb.
