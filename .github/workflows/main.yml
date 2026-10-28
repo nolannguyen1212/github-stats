@@ -4,11 +4,16 @@ on:
   push:
     branches: [ master ]
   schedule:
+    # Every day at 00:05 UTC (07:05 Vietnam time)
     - cron: "5 0 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+
+concurrency:
+  group: generate-stats
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -16,14 +21,12 @@ jobs:
 
     steps:
     # Check out repository under $GITHUB_WORKSPACE, so the job can access it
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    # Run using Python 3.8 for consistency and aiohttp
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v4
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.8'
-        architecture: 'x64'
+        python-version: '3.12'
         cache: 'pip'
 
     # Install dependencies with `pip`
@@ -32,7 +35,7 @@ jobs:
         python3 -m pip install --upgrade pip setuptools wheel
         python3 -m pip install -r requirements.txt
 
-    # Generate all statistics images
+    # Generate the terminal-style overview and languages cards
     - name: Generate images
       run: |
         python3 --version
@@ -44,12 +47,21 @@ jobs:
         EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
         EXCLUDE_FORKED_REPOS: true
 
+    # Contribution snake in Matrix green (dark) plus a light fallback
+    - name: Generate contribution snake
+      uses: Platane/snk@v3
+      with:
+        github_user_name: ${{ github.repository_owner }}
+        outputs: |
+          generated/snake-dark.svg?color_snake=#00ff41&color_dots=#0f1a10,#0b3d17,#00792a,#00b33a,#00ff41
+          generated/snake-light.svg?color_snake=#00792a&color_dots=#ebedf0,#b6f5c4,#5fd17a,#1f9e45,#0b5d24
+
     # Commit all changed files to the repository
     - name: Commit to the repo
       run: |
-        git config --global user.name "jstrieb/github-stats"
-        git config --global user.email "github-stats[bot]@jstrieb.github.io"
-        git add .
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add generated
         # Force the build to succeed, even if no files were changed
         git commit -m 'Update generated files' || true
         git push

@@ -1,155 +1,122 @@
-# [GitHub Stats Visualization](https://github.com/jstrieb/github-stats)
+# github-stats · Matrix Terminal Edition
 
-<!--
-https://github.community/t/support-theme-context-for-images-in-light-vs-dark-mode/147981/84
--->
-<a href="https://github.com/jstrieb/github-stats">
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/overview.svg#gh-dark-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/languages.svg#gh-dark-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/overview.svg#gh-light-mode-only" />
-<img src="https://github.com/jstrieb/github-stats/blob/master/generated/languages.svg#gh-light-mode-only" />
-</a>
+<img src="assets/header.svg" alt="header" width="100%" />
 
-Generate visualizations of GitHub user and repository statistics with GitHub
-Actions. Visualizations can include data for both private repositories, and for
-repositories you have contributed to, but do not own.
+<p>
+<img src="generated/overview.svg" alt="overview" width="49%" />
+<img src="generated/languages.svg" alt="languages" width="49%" />
+</p>
 
-Generated images automatically switch between GitHub light theme and GitHub
-dark theme.
+Repo này generate các SVG phong cách **terminal / Matrix green** cho GitHub
+profile bằng GitHub Actions — không cần server, chạy hằng ngày, và đọc được cả
+dữ liệu **private repo** nhờ Personal Access Token của chính bạn.
 
-## Background
+Fork từ [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
+(GPL-3.0), đã viết lại template và thêm contribution snake.
 
-When someone views a profile on GitHub, it is often because they are curious
-about a user's open source projects and contributions. Unfortunately, that
-user's stars, forks, and pinned repositories do not necessarily reflect the
-contributions they make to private repositories. The data likewise does not
-present a complete picture of the user's total contributions beyond the current
-year.
+## Cấu trúc
 
-This project aims to collect a variety of profile and repository statistics
-using the GitHub API. It then generates images that can be displayed in
-repository READMEs, or in a user's [Profile
-README](https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme).
+| Đường dẫn | Mô tả |
+|---|---|
+| `templates/overview.svg` | Template card thống kê (stars, forks, contributions, lines changed, views, repos) |
+| `templates/languages.svg` | Template card ngôn ngữ — top 6, dạng thanh ASCII `█░` |
+| `generate_images.py` | Điền số liệu vào template → `generated/*.svg` |
+| `github_stats.py` | Gọi GitHub GraphQL/REST API để lấy số liệu |
+| `assets/header.svg` | Banner terminal có hiệu ứng gõ chữ (tĩnh, tự sửa nội dung) |
+| `generated/` | Output do Actions commit: `overview.svg`, `languages.svg`, `snake-dark.svg`, `snake-light.svg` |
+| `profile/README.md` | README hoàn chỉnh để copy sang repo profile |
+| `.github/workflows/main.yml` | Chạy mỗi ngày 00:05 UTC, khi push lên `master`, hoặc chạy tay |
 
-Since the project runs on GitHub Actions, no server is required to regularly
-regenerate the images with updated statistics. Likewise, since the user runs
-the analysis code themselves via GitHub Actions, they can use their GitHub
-access token to collect statistics on private repositories that an external
-service would be unable to access.
+## Cài đặt
 
-## Disclaimer
+### 1. Tạo Personal Access Token
 
-If the project is used with an access token that has sufficient permissions to
-read private repositories, it may leak details about those repositories in
-error messages. For example, the `aiohttp` library—used for asynchronous API
-requests—may include the requested URL in exceptions, which can leak the name
-of private repositories. If there is an exception caused by `aiohttp`, this
-exception will be viewable in the Actions tab of the repository fork, and
-anyone may be able to see the name of one or more private repositories.
+Workflow cần token riêng (token mặc định của Actions không đọc được dữ liệu
+user và private repo).
 
-Due to some issues with the GitHub statistics API, there are some situations
-where it returns inaccurate results. Specifically, the repository view count
-statistics and total lines of code modified are probably somewhat inaccurate.
-Unexpectedly, these values will become more accurate over time as GitHub
-caches statistics for your repositories. Additionally, repositories that were
-last contributed to more than a year ago may not be included in the statistics
-due to limitations in the results returned by the API.
+**Classic token** (đơn giản nhất): *Settings → Developer settings → Personal
+access tokens → Tokens (classic) → Generate new token*
 
-For more information on inaccuracies, see issue
-[#2](https://github.com/jstrieb/github-stats/issues/2),
-[#3](https://github.com/jstrieb/github-stats/issues/3), and
-[#13](https://github.com/jstrieb/github-stats/issues/13).
+- Scopes: `repo` và `read:user`
+- Expiration: tuỳ bạn — nhớ gia hạn khi hết hạn, nếu không workflow sẽ fail
 
-# Installation
+> Token mới tạo đôi khi mất vài phút mới hoạt động.
 
-<!-- TODO: Add details and screenshots -->
+### 2. Thêm secrets vào repo này
 
-1. Create a personal access token (not the default GitHub Actions token) using
-   the instructions
-   [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token).
-   Personal access token must have permissions: `read:user` and `repo`. Copy
-   the access token when it is generated – if you lose it, you will have to
-   regenerate the token.
-   - Some users are reporting that it can take a few minutes for the personal
-     access token to work. For more, see 
-     [#30](https://github.com/jstrieb/github-stats/issues/30).
-2. Create a copy of this repository by clicking
-   [here](https://github.com/jstrieb/github-stats/generate). Note: this is
-   **not** the same as forking a copy because it copies everything fresh,
-   without the huge commit history. 
-3. Go to the "Secrets" page of your copy of the repository. If this is the
-   README of your copy, click [this link](../../settings/secrets/actions) to go
-   to the "Secrets" page. Otherwise, go to the "Settings" tab of the
-   newly-created repository and go to the "Secrets" page (bottom left).
-4. Create a new secret with the name `ACCESS_TOKEN` and paste the copied
-   personal access token as the value.
-5. It is possible to change the type of statistics reported by adding other
-   repository secrets. 
-   - To ignore certain repos, add them (in owner/name format e.g.,
-     `jstrieb/github-stats`) separated by commas to a new secret—created as
-     before—called `EXCLUDED`.
-   - To ignore certain languages, add them (separated by commas) to a new
-     secret called `EXCLUDED_LANGS`. For example, to exclude HTML and TeX you
-     could set the value to `html,tex`.
-   - To show statistics only for "owned" repositories and not forks with
-     contributions, add an environment variable (under the `env` header in the
-     [main
-     workflow](https://github.com/jstrieb/github-stats/blob/master/.github/workflows/main.yml))
-     called `EXCLUDE_FORKED_REPOS` with a value of `true`.
-   - These other values are added as secrets by default to prevent leaking
-     information about private repositories. If you're not worried about that,
-     you can change the values directly [in the Actions workflow
-     itself](https://github.com/jstrieb/github-stats/blob/05de1314b870febd44d19ad2f55d5e59d83f5857/.github/workflows/main.yml#L48-L53).
-6. Go to the [Actions
-   Page](../../actions?query=workflow%3A"Generate+Stats+Images") and press "Run
-   Workflow" on the right side of the screen to generate images for the first
-   time. 
-   - The images will be automatically regenerated every 24 hours, but they can
-     be regenerated manually by running the workflow this way.
-7. Take a look at the images that have been created in the
-   [`generated`](generated) folder.
-8. To add your statistics to your GitHub Profile README, copy and paste the
-   following lines of code into your markdown content. Change the `username`
-   value to your GitHub username.
-   ```md
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-dark-mode-only)
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/overview.svg#gh-light-mode-only)
-   ```
-   ```md
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-dark-mode-only)
-   ![](https://raw.githubusercontent.com/username/github-stats/master/generated/languages.svg#gh-light-mode-only)
-   ```
-9. Link back to this repository so that others can generate their own
-   statistics images.
-10. Star this repo if you like it!
+*Settings → Secrets and variables → Actions → New repository secret*
 
+| Secret | Bắt buộc | Ví dụ | Ý nghĩa |
+|---|---|---|---|
+| `ACCESS_TOKEN` | ✅ | `ghp_xxx…` | Token ở bước 1 |
+| `EXCLUDED` | | `nolannguyen1212/dotfiles,org/legacy-app` | Repo bỏ qua khi tính thống kê |
+| `EXCLUDED_LANGS` | | `HTML,CSS,Jupyter Notebook` | Ngôn ngữ ẩn khỏi card languages |
 
-# Support the Project
+Forked repo đã được loại trừ sẵn (`EXCLUDE_FORKED_REPOS: true` trong workflow).
 
-There are a few things you can do to support the project:
+> Gợi ý cho profile Go/backend: thêm `HTML,CSS,SCSS,Jupyter Notebook` vào
+> `EXCLUDED_LANGS` để card ngôn ngữ không bị lệch bởi file template/notebook.
 
-- Star the repository (and follow me on GitHub for more)
-- Share and upvote on sites like Twitter, Reddit, and Hacker News
-- Report any bugs, glitches, or errors that you find
+### 3. Bật quyền ghi cho Actions
 
-These things motivate me to to keep sharing what I build, and they provide
-validation that my work is appreciated! They also help me improve the
-project. Thanks in advance!
+*Settings → Actions → General → Workflow permissions →* **Read and write
+permissions** → Save. (Workflow đã khai báo `permissions: contents: write`,
+nhưng một số tài khoản/org vẫn chặn ở mức repo.)
 
-If you are insistent on spending money to show your support, I encourage you to
-instead make a generous donation to one of the following organizations. By advocating
-for Internet freedoms, organizations like these help me to feel comfortable
-releasing work publicly on the Web.
+### 4. Chạy workflow
 
-- [Electronic Frontier Foundation](https://supporters.eff.org/donate/)
-- [Signal Foundation](https://signal.org/donate/)
-- [Mozilla](https://donate.mozilla.org/en-US/)
-- [The Internet Archive](https://archive.org/donate/index.php)
+*Actions → Generate Stats Images → Run workflow*. Sau khoảng 1–3 phút, thư mục
+`generated/` sẽ có 4 file SVG mới. Từ đó trở đi workflow tự chạy mỗi ngày.
 
+> Repo này phải **public** — README profile nhúng ảnh qua
+> `raw.githubusercontent.com`, URL này không truy cập được nếu repo private.
+> Dữ liệu private repo vẫn chỉ xuất hiện dưới dạng con số tổng hợp.
 
-# Related Projects
+### 5. Tạo profile README
 
-- Inspired by a desire to improve upon
-  [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
-- Makes use of [GitHub Octicons](https://primer.style/octicons/) to precisely
-  match the GitHub UI
+1. Tạo repo **public** tên trùng username: `nolannguyen1212/nolannguyen1212`
+   (GitHub sẽ hiện thông báo "special repository").
+2. Copy nội dung [`profile/README.md`](profile/README.md) vào `README.md` của
+   repo đó.
+3. Sửa các chỗ placeholder:
+   - email / LinkedIn trong hàng badge đầu trang
+   - khối `nolan.yaml` (role, domains, learning…)
+   - bảng `~/projects` — thay `project-one/two/three` bằng repo thật
+   - danh sách badge `~/stack` cho đúng công nghệ bạn dùng
+
+## Tuỳ chỉnh
+
+**Header banner** — sửa text trong `assets/header.svg`. Mỗi dòng được "gõ" ra
+bằng cách animate độ rộng của một `clipPath`; nếu dòng lệnh dài hơn, tăng giá
+trị `to="520"` tương ứng (~8.4px mỗi ký tự).
+
+**Màu** — palette dùng chung cho mọi file:
+
+| Token | Hex | Dùng cho |
+|---|---|---|
+| background | `#0a0f0a` | nền card |
+| title bar | `#0f1a10` | thanh tiêu đề |
+| phosphor | `#00ff41` | prompt, thanh ngôn ngữ, viền |
+| mid green | `#00c72c` | key, phần trăm |
+| bright text | `#b6ffc6` | giá trị |
+| dim | `#1f5f2c` | dấu chấm dẫn, thanh trống |
+
+**Số ngôn ngữ / độ dài thanh** — `MAX_LANGUAGES` và `BAR_WIDTH` ở đầu phần
+image generation trong `generate_images.py`.
+
+**Lịch chạy** — sửa `cron` trong `.github/workflows/main.yml`.
+
+## Lưu ý về độ chính xác
+
+- *Lines of code changed* và *views* lấy từ API thống kê của GitHub, có thể
+  thiếu ở lần chạy đầu và chính xác dần khi GitHub cache xong (xem
+  [jstrieb#2](https://github.com/jstrieb/github-stats/issues/2),
+  [#3](https://github.com/jstrieb/github-stats/issues/3),
+  [#13](https://github.com/jstrieb/github-stats/issues/13)).
+- Views chỉ tính 14 ngày gần nhất và chỉ cho repo bạn có quyền push.
+- Nếu `aiohttp` ném exception, log trong tab Actions (public) có thể lộ **tên**
+  private repo. Cân nhắc điều này trước khi dùng token có scope `repo`.
+
+## License
+
+GPL-3.0 — xem [LICENSE](LICENSE). Code gốc © Jacob Strieb.

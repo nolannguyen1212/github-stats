@@ -1,149 +1,59 @@
-<svg id="gh-dark-mode-only" width="360" height="210" xmlns="http://www.w3.org/2000/svg">
+<svg xml:space="preserve" width="480" height="230" viewBox="0 0 480 230" xmlns="http://www.w3.org/2000/svg">
 <style>
-svg {
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-size: 14px;
-  line-height: 21px;
+text {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  fill: #00ff41;
+  white-space: pre;
+}
+.title  { fill: #7dff9a; font-size: 12px; }
+.prompt { fill: #00ff41; font-weight: 700; }
+.cmd    { fill: #d8ffe0; }
+.lang   { fill: #b6ffc6; }
+.bar    { fill: #00ff41; }
+.track  { fill: #1f5f2c; }
+.pct    { fill: #00c72c; }
+
+.line {
+  opacity: 0;
+  animation: boot 0.35s ease-out forwards;
+}
+@keyframes boot {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-#background {
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
-  fill: white;
-  stroke: rgb(225, 228, 232);
-  stroke-width: 1px;
-  rx: 6px;
-  ry: 6px;
-}
+.cursor { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
 
-#gh-dark-mode-only:target #background {
-  fill: #0d1117;
-  stroke-width: 0.5px;
-}
-
-foreignObject {
-  width: calc(100% - 10px - 32px);
-  height: calc(100% - 10px - 24px);
-}
-
-h2 {
-  margin-top: 0;
-  margin-bottom: 0.75em;
-  line-height: 24px;
-  font-size: 16px;
-  font-weight: 600;
-  color: rgb(36, 41, 46);
-  fill: rgb(36, 41, 46);
-}
-
-#gh-dark-mode-only:target h2 {
-  color: #c9d1d9;
-  fill: #c9d1d9;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-li {
-  display: inline-flex;
-  font-size: 12px;
-  margin-right: 2ch;
-  align-items: center;
-  flex-wrap: nowrap;
-  transform: translateX(-500%);
-  animation: slideIn 2s ease-in-out forwards;
-}
-
-@keyframes slideIn {
-  to {
-    transform: translateX(0);
-  }
-}
-
-div.ellipsis {
-  height: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.octicon {
-  fill: rgb(88, 96, 105);
-  margin-right: 0.5ch;
-  vertical-align: top;
-}
-
-#gh-dark-mode-only:target .octicon {
-  color: #8b949e;
-  fill: #8b949e;
-}
-
-.progress {
-  display: flex;
-  height: 8px;
-  overflow: hidden;
-  background-color: rgb(225, 228, 232);
-  border-radius: 6px;
-  outline: 1px solid transparent;
-  margin-bottom: 1em;
-}
-
-#gh-dark-mode-only:target .progress {
-  background-color: rgba(110, 118, 129, 0.4);
-}
-
-.progress-item {
-  outline: 2px solid rgb(225, 228, 232);
-  border-collapse: collapse;
-}
-
-#gh-dark-mode-only:target .progress-item {
-  outline: 2px solid #393f47;
-}
-
-.lang {
-  font-weight: 600;
-  margin-right: 4px;
-  color: rgb(36, 41, 46);
-}
-
-#gh-dark-mode-only:target .lang {
-  color: #c9d1d9;
-}
-
-.percent {
-  color: rgb(88, 96, 105)
-}
-
-#gh-dark-mode-only:target .percent {
-  color: #8b949e;
+.scan { animation: scan 6s linear infinite; }
+@keyframes scan {
+  from { transform: translateY(-40px); }
+  to   { transform: translateY(250px); }
 }
 </style>
-<g>
-<rect x="5" y="5" id="background" />
-<g>
-<foreignObject x="21" y="17" width="318" height="176">
-<div xmlns="http://www.w3.org/1999/xhtml" class="ellipsis">
+<defs>
+  <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#00ff41" stop-opacity="0" />
+    <stop offset="1" stop-color="#00ff41" stop-opacity="0.06" />
+  </linearGradient>
+  <clipPath id="frame"><rect x="1" y="1" width="478" height="228" rx="8" /></clipPath>
+</defs>
 
-<h2>Languages Used (By File Size)</h2>
-
-<div>
-<span class="progress">
-{{ progress }}
-</span>
-</div>
-
-<ul>
-
-{{ lang_list }}
-
-</ul>
-
-</div>
-</foreignObject>
+<g clip-path="url(#frame)">
+  <rect x="0" y="0" width="480" height="230" fill="#0a0f0a" />
+  <rect x="0" y="0" width="480" height="28" fill="#0f1a10" />
+  <rect class="scan" x="0" y="0" width="480" height="40" fill="url(#scanGrad)" />
 </g>
-</g>
+<rect x="0.5" y="0.5" width="479" height="229" rx="8" fill="none" stroke="#00ff41" stroke-opacity="0.35" />
+<line x1="0" y1="28" x2="480" y2="28" stroke="#00ff41" stroke-opacity="0.2" />
+
+<circle cx="16" cy="14" r="5" fill="#ff5f56" />
+<circle cx="32" cy="14" r="5" fill="#ffbd2e" />
+<circle cx="48" cy="14" r="5" fill="#27c93f" />
+<text class="title" x="240" y="18" text-anchor="middle">{{ login }}@github: ~/langs</text>
+
+<text x="18" y="54" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">tokei --sort bytes ~/repos | head -{{ count }}</tspan></text>
+{{ rows }}
+<text x="18" y="{{ cursor_y }}" class="line" style="animation-delay: {{ cursor_delay }}ms"><tspan class="prompt">$ </tspan><tspan class="cursor">█</tspan></text>
 </svg>

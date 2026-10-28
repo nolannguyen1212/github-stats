@@ -1,0 +1,64 @@
+<svg xml:space="preserve" width="980" height="250" viewBox="0 0 980 250" xmlns="http://www.w3.org/2000/svg">
+<!--
+  Static header for the profile README. Edit the <text> contents below.
+  Each line is revealed by animating the width of its clip rect (SMIL), so
+  if you change a line's length, adjust the matching `to="..."` width:
+  roughly 8.4px per character at 14px monospace.
+-->
+<style>
+text {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  fill: #00ff41;
+}
+.title  { fill: #7dff9a; font-size: 12px; }
+.prompt { fill: #00ff41; font-weight: 700; }
+.path   { fill: #00c72c; }
+.cmd    { fill: #d8ffe0; }
+.out    { fill: #b6ffc6; }
+.dim    { fill: #3c8c4b; }
+.hl     { fill: #00ff41; font-weight: 700; }
+.cursor { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.rain   { fill: #00ff41; font-size: 12px; opacity: 0.12; }
+</style>
+<defs>
+  <clipPath id="frame"><rect x="1" y="1" width="978" height="248" rx="10" /></clipPath>
+  <clipPath id="l1"><rect x="0" y="40" height="26" width="0"><animate attributeName="width" from="0" to="520" begin="0.3s" dur="0.9s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l2"><rect x="0" y="66" height="26" width="0"><animate attributeName="width" from="0" to="980" begin="1.3s" dur="0.01s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l3"><rect x="0" y="100" height="26" width="0"><animate attributeName="width" from="0" to="520" begin="1.8s" dur="0.9s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l4"><rect x="0" y="126" height="26" width="0"><animate attributeName="width" from="0" to="980" begin="2.8s" dur="0.01s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l5"><rect x="0" y="160" height="26" width="0"><animate attributeName="width" from="0" to="520" begin="3.3s" dur="0.9s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l6"><rect x="0" y="186" height="26" width="0"><animate attributeName="width" from="0" to="980" begin="4.3s" dur="0.01s" fill="freeze" /></rect></clipPath>
+  <clipPath id="l7"><rect x="0" y="212" height="30" width="0"><animate attributeName="width" from="0" to="980" begin="4.8s" dur="0.01s" fill="freeze" /></rect></clipPath>
+</defs>
+
+<g clip-path="url(#frame)">
+  <rect width="980" height="250" fill="#0a0f0a" />
+  <rect width="980" height="30" fill="#0f1a10" />
+  <!-- faint matrix rain on the right edge -->
+  <g class="rain">
+    <text x="900" y="60">ｱ 0 ﾊ</text><text x="930" y="80">1 ｷ</text><text x="890" y="100">ﾐ 1 0</text>
+    <text x="940" y="120">ｦ</text><text x="905" y="140">0 ﾘ 1</text><text x="925" y="160">ﾂ 0</text>
+    <text x="895" y="180">1 ﾕ</text><text x="935" y="200">ﾈ 1</text><text x="910" y="220">0 ｺ 0</text>
+    <animateTransform attributeName="transform" type="translate" from="0 -20" to="0 20" dur="4s" repeatCount="indefinite" />
+  </g>
+</g>
+<rect x="0.5" y="0.5" width="979" height="249" rx="10" fill="none" stroke="#00ff41" stroke-opacity="0.35" />
+<line x1="0" y1="30" x2="980" y2="30" stroke="#00ff41" stroke-opacity="0.2" />
+<circle cx="18" cy="15" r="5.5" fill="#ff5f56" />
+<circle cx="36" cy="15" r="5.5" fill="#ffbd2e" />
+<circle cx="54" cy="15" r="5.5" fill="#27c93f" />
+<text class="title" x="490" y="19" text-anchor="middle">nolan@prod-cluster: ~ — zsh — 980×250</text>
+
+<g clip-path="url(#l1)"><text x="22" y="58"><tspan class="prompt">nolan@prod-cluster</tspan><tspan class="dim">:</tspan><tspan class="path">~</tspan><tspan class="prompt">$ </tspan><tspan class="cmd">whoami</tspan></text></g>
+<g clip-path="url(#l2)"><text x="22" y="84" class="out"><tspan class="hl">Nolan Nguyen</tspan> // Backend Engineer · Go · Distributed Systems</text></g>
+
+<g clip-path="url(#l3)"><text x="22" y="118"><tspan class="prompt">nolan@prod-cluster</tspan><tspan class="dim">:</tspan><tspan class="path">~</tspan><tspan class="prompt">$ </tspan><tspan class="cmd">cat ./focus.yaml</tspan></text></g>
+<g clip-path="url(#l4)"><text x="22" y="144" class="out"><tspan class="dim">focus: </tspan>[ concurrency, consensus, event-driven, gRPC, observability, high-throughput APIs ]</text></g>
+
+<g clip-path="url(#l5)"><text x="22" y="178"><tspan class="prompt">nolan@prod-cluster</tspan><tspan class="dim">:</tspan><tspan class="path">~</tspan><tspan class="prompt">$ </tspan><tspan class="cmd">systemctl status nolan</tspan></text></g>
+<g clip-path="url(#l6)"><text x="22" y="204" class="out"><tspan class="hl">● active (running)</tspan><tspan class="dim"> — </tspan>shipping reliable systems · p99 matters · logs, metrics, traces</text></g>
+
+<g clip-path="url(#l7)"><text x="22" y="232"><tspan class="prompt">nolan@prod-cluster</tspan><tspan class="dim">:</tspan><tspan class="path">~</tspan><tspan class="prompt">$ </tspan><tspan class="cursor">█</tspan></text></g>
+</svg>

@@ -2,7 +2,8 @@
 
 import asyncio
 import os
-import re
+from html import escape
+from typing import Dict
 
 import aiohttp
 
@@ -26,64 +27,111 @@ def generate_output_folder() -> None:
 # Individual Image Generation Functions
 ################################################################################
 
+FIRST_ROW_Y = 78
+ROW_HEIGHT = 21
+ROW_DELAY_MS = 120
+MAX_LANGUAGES = 6
+BAR_WIDTH = 24
 
-async def generate_overview(s: Stats) -> None:
+
+def render(template: str, values: Dict[str, str]) -> str:
     """
-    Generate an SVG badge with summary statistics
+    Substitute {{ key }} placeholders in a template without regex escaping issues
+    :param template: SVG template contents
+    :param values: mapping from placeholder name to replacement text
+    :return: rendered SVG
+    """
+    for key, value in values.items():
+        template = template.replace(f"{{{{ {key} }}}}", value)
+    return template
+
+
+def cursor_values(num_rows: int) -> Dict[str, str]:
+    """
+    Position the blinking prompt below the last row and reveal it after the rows
+    :param num_rows: number of rows printed between the command and the cursor
+    """
+    return {
+        "cursor_y": str(FIRST_ROW_Y + num_rows * ROW_HEIGHT + 3),
+        "cursor_delay": str((num_rows + 1) * ROW_DELAY_MS),
+    }
+
+
+async def generate_overview(s: Stats, login: str) -> None:
+    """
+    Generate a terminal-style SVG card with summary statistics
     :param s: Represents user's GitHub statistics
+    :param login: GitHub username shown in the prompt
     """
     with open("templates/overview.svg", "r") as f:
         output = f.read()
 
-    output = re.sub("{{ name }}", await s.name, output)
-    output = re.sub("{{ stars }}", f"{await s.stargazers:,}", output)
-    output = re.sub("{{ forks }}", f"{await s.forks:,}", output)
-    output = re.sub("{{ contributions }}", f"{await s.total_contributions:,}", output)
-    changed = (await s.lines_changed)[0] + (await s.lines_changed)[1]
-    output = re.sub("{{ lines_changed }}", f"{changed:,}", output)
-    output = re.sub("{{ views }}", f"{await s.views:,}", output)
-    output = re.sub("{{ repos }}", f"{len(await s.repos):,}", output)
+    added, deleted = await s.lines_changed
+    stats = [
+        ("stars", f"{await s.stargazers:,}"),
+        ("forks", f"{await s.forks:,}"),
+        ("contributions", f"{await s.total_contributions:,}"),
+        ("lines_changed", f"+{added:,} / -{deleted:,}"),
+        ("views_14d", f"{await s.views:,}"),
+        ("repos_contributed", f"{len(await s.repos):,}"),
+    ]
+
+    rows = ""
+    for i, (key, value) in enumerate(stats):
+        dots = "." * (22 - len(key))
+        rows += (
+            f'<text x="30" y="{FIRST_ROW_Y + i * ROW_HEIGHT}" class="line" '
+            f'style="animation-delay: {(i + 1) * ROW_DELAY_MS}ms">'
+            f'<tspan class="key">{key}</tspan><tspan class="dots"> {dots} </tspan>'
+            f'<tspan class="val">{escape(value)}</tspan></text>\n'
+        )
+
+    output = render(
+        output,
+        {"login": escape(login), "rows": rows, **cursor_values(len(stats))},
+    )
 
     generate_output_folder()
     with open("generated/overview.svg", "w") as f:
         f.write(output)
 
 
-async def generate_languages(s: Stats) -> None:
+async def generate_languages(s: Stats, login: str) -> None:
     """
-    Generate an SVG badge with summary languages used
+    Generate a terminal-style SVG card with ASCII bars of the languages used
     :param s: Represents user's GitHub statistics
+    :param login: GitHub username shown in the prompt
     """
     with open("templates/languages.svg", "r") as f:
         output = f.read()
 
-    progress = ""
-    lang_list = ""
     sorted_languages = sorted(
         (await s.languages).items(), reverse=True, key=lambda t: t[1].get("size")
-    )
-    delay_between = 150
+    )[:MAX_LANGUAGES]
+
+    rows = ""
     for i, (lang, data) in enumerate(sorted_languages):
-        color = data.get("color")
-        color = color if color is not None else "#000000"
-        progress += (
-            f'<span style="background-color: {color};'
-            f'width: {data.get("prop", 0):0.3f}%;" '
-            f'class="progress-item"></span>'
+        prop = data.get("prop", 0)
+        filled = max(1, round(prop / 100 * BAR_WIDTH)) if prop > 0 else 0
+        name = lang if len(lang) <= 12 else lang[:11] + "…"
+        rows += (
+            f'<text x="30" y="{FIRST_ROW_Y + i * ROW_HEIGHT}" class="line" '
+            f'style="animation-delay: {(i + 1) * ROW_DELAY_MS}ms">'
+            f'<tspan class="lang">{escape(name):<12}</tspan> '
+            f'<tspan class="bar">{"█" * filled}</tspan>'
+            f'<tspan class="track">{"░" * (BAR_WIDTH - filled)}</tspan> '
+            f'<tspan class="pct">{prop:6.2f}%</tspan></text>\n'
         )
-        lang_list += f"""
-<li style="animation-delay: {i * delay_between}ms;">
-<svg xmlns="http://www.w3.org/2000/svg" class="octicon" style="fill:{color};"
-viewBox="0 0 16 16" version="1.1" width="16" height="16"><path
-fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8z"></path></svg>
-<span class="lang">{lang}</span>
-<span class="percent">{data.get("prop", 0):0.2f}%</span>
-</li>
 
-"""
-
-    output = re.sub(r"{{ progress }}", progress, output)
-    output = re.sub(r"{{ lang_list }}", lang_list, output)
+    output = render(
+        output,
+        {
+            "login": escape(login),
+            "count": str(len(sorted_languages)),
+            "rows": rows,
+            **cursor_values(len(sorted_languages)),
+        },
+    )
 
     generate_output_folder()
     with open("generated/languages.svg", "w") as f:
@@ -129,7 +177,9 @@ async def main() -> None:
             exclude_langs=excluded_langs,
             ignore_forked_repos=ignore_forked_repos,
         )
-        await asyncio.gather(generate_languages(s), generate_overview(s))
+        await asyncio.gather(
+            generate_languages(s, user), generate_overview(s, user)
+        )
 
 
 if __name__ == "__main__":
