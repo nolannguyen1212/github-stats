@@ -11,8 +11,8 @@
 <br />
 
 <a href="https://github.com/nolannguyen1212?tab=repositories"><img src="https://img.shields.io/badge/-~%2Frepos-0a0f0a?style=flat-square&logo=github&logoColor=00ff41" alt="repos" /></a>
-<a href="mailto:you@example.com"><img src="https://img.shields.io/badge/-mail-0a0f0a?style=flat-square&logo=gmail&logoColor=00ff41" alt="email" /></a>
-<a href="https://www.linkedin.com/in/your-handle"><img src="https://img.shields.io/badge/-linkedin-0a0f0a?style=flat-square&logo=linkedin&logoColor=00ff41" alt="linkedin" /></a>
+<a href="https://nolannguyen.bbmonster.online"><img src="https://img.shields.io/badge/-website-0a0f0a?style=flat-square&logo=googlechrome&logoColor=00ff41" alt="website" /></a>
+<a href="https://www.linkedin.com/in/viet-anh-nguyen-799796235/"><img src="https://img.shields.io/badge/-linkedin-0a0f0a?style=flat-square&logo=linkedin&logoColor=00ff41" alt="linkedin" /></a>
 <img src="https://komarev.com/ghpvc/?username=nolannguyen1212&style=flat-square&color=00ff41&label=visitors" alt="profile views" />
 
 </div>
@@ -23,6 +23,7 @@
 
 ```yaml
 role:      Backend Engineer
+location:  Ho Chi Minh City, Vietnam
 lang:      [Go, Python, SQL]
 domains:   [distributed systems, event-driven architecture, platform engineering]
 building:  services that stay boring at 3 a.m. — idempotent, observable, horizontally scalable
