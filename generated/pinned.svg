@@ -1,0 +1,88 @@
+<svg xml:space="preserve" width="980" height="482" viewBox="0 0 980 482" xmlns="http://www.w3.org/2000/svg">
+<style>
+text {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  fill: #00ff41;
+  white-space: pre;
+}
+.title  { fill: #7dff9a; font-size: 12px; }
+.prompt { fill: #00ff41; font-weight: 700; }
+.cmd    { fill: #d8ffe0; }
+.name   { fill: #00ff41; font-weight: 700; font-size: 14px; }
+.tag    { fill: #3c8c4b; font-size: 11px; }
+.desc   { fill: #b6ffc6; font-size: 12px; }
+.meta   { fill: #00c72c; font-size: 12px; }
+.dim    { fill: #3c8c4b; }
+.card   { fill: #0d160e; stroke: #00ff41; stroke-opacity: 0.28; }
+
+.line {
+  opacity: 0;
+  animation: boot 0.4s ease-out forwards;
+}
+@keyframes boot {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cursor { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+</style>
+<defs>
+  <clipPath id="frame"><rect x="1" y="1" width="978" height="480" rx="10" /></clipPath>
+</defs>
+
+<g clip-path="url(#frame)">
+  <rect width="980" height="482" fill="#0a0f0a" />
+  <rect width="980" height="30" fill="#0f1a10" />
+</g>
+<rect x="0.5" y="0.5" width="979" height="481" rx="10" fill="none" stroke="#00ff41" stroke-opacity="0.35" />
+<line x1="0" y1="30" x2="980" y2="30" stroke="#00ff41" stroke-opacity="0.2" />
+<circle cx="18" cy="15" r="5.5" fill="#ff5f56" />
+<circle cx="36" cy="15" r="5.5" fill="#ffbd2e" />
+<circle cx="54" cy="15" r="5.5" fill="#27c93f" />
+<text class="title" x="490" y="19" text-anchor="middle">nolannguyen1212@github: ~/pinned</text>
+
+<text x="22" y="56" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">gh repo list nolannguyen1212 --pinned</tspan></text>
+
+<g class="line" style="animation-delay: 120ms">
+<rect class="card" x="22" y="74" width="460" height="118" rx="6" />
+<text class="name" x="38" y="102">▸ memkv</text>
+<text class="tag" x="466" y="101" text-anchor="end">[public]</text>
+<text class="desc" x="38" y="126">In-memory key value database</text>
+<text class="meta" x="38" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>18d ago</tspan></text>
+</g>
+
+<g class="line" style="animation-delay: 240ms">
+<rect class="card" x="498" y="74" width="460" height="118" rx="6" />
+<text class="name" x="514" y="102">▸ media-notes</text>
+<text class="tag" x="942" y="101" text-anchor="end">[public]</text>
+<text class="desc" x="514" y="126">AI-powered media transcription and summarization platform</text>
+<text class="meta" x="514" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>5d ago</tspan></text>
+</g>
+
+<g class="line" style="animation-delay: 360ms">
+<rect class="card" x="22" y="208" width="460" height="118" rx="6" />
+<text class="name" x="38" y="236">▸ midproxy</text>
+<text class="tag" x="466" y="235" text-anchor="end">[public]</text>
+<text class="desc" x="38" y="260">HTTP proxy CF solver</text>
+<text class="meta" x="38" y="310"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>2mo ago</tspan></text>
+</g>
+
+<g class="line" style="animation-delay: 480ms">
+<rect class="card" x="498" y="208" width="460" height="118" rx="6" />
+<text class="name" x="514" y="236">▸ pyqueue</text>
+<text class="tag" x="942" y="235" text-anchor="end">[public]</text>
+<text class="desc" x="514" y="260">A lightweight, Redis-backed distributed job queue system</text><text class="desc" x="514" y="278">for Python</text>
+<text class="meta" x="514" y="310"><tspan>● Python</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>10mo ago</tspan></text>
+</g>
+
+<g class="line" style="animation-delay: 600ms">
+<rect class="card" x="22" y="342" width="460" height="118" rx="6" />
+<text class="name" x="38" y="370">▸ mini-infra-cicd</text>
+<text class="tag" x="466" y="369" text-anchor="end">[public]</text>
+<text class="desc" x="38" y="394">Mini CI/CD setup with Docker for local testing</text>
+<text class="meta" x="38" y="444"><tspan>● Shell</tspan><tspan class="dim">   ★ </tspan><tspan>2</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>1y ago</tspan></text>
+</g>
+
+</svg>
