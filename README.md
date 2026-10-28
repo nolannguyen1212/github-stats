@@ -84,10 +84,12 @@ repository level.)
    notice).
 2. Copy [`profile/README.md`](profile/README.md) into that repository's
    `README.md`.
-3. Adjust the personal parts:
-   - the link badges at the top
-   - the `nolan.yaml` block (role, domains, learning…)
-   - the `~/stack` badges to match the technologies you actually use
+3. Edit the text in `assets/header.svg` (name, role, focus).
+
+The profile README stays minimal on purpose: links, location and company live
+in the GitHub sidebar, and pinned repositories and the contribution graph are
+already rendered by GitHub below the README. `pinned.svg` and
+`contributions.svg` are still generated and can be embedded if wanted.
 
 ## Customization
 
