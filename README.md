@@ -12,8 +12,8 @@ profile using GitHub Actions — no server required, refreshed daily, and able
 to include **private repository** data through your own Personal Access Token.
 
 Forked from [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
-(GPL-3.0), with rewritten templates plus pinned-repo cards, a contribution
-heatmap and a contribution snake.
+(GPL-3.0), with rewritten templates plus pinned-repo cards and a contribution
+heatmap.
 
 ## Layout
 
@@ -26,7 +26,7 @@ heatmap and a contribution snake.
 | `generate_images.py` | Fills the templates with data → `generated/*.svg` |
 | `github_stats.py` | Queries the GitHub GraphQL/REST APIs |
 | `assets/header.svg` | Animated typing terminal banner (static, edit by hand) |
-| `generated/` | Committed by Actions: `overview.svg`, `languages.svg`, `pinned.svg`, `contributions.svg`, `snake-dark.svg`, `snake-light.svg` |
+| `generated/` | Committed by Actions: `overview.svg`, `languages.svg`, `pinned.svg`, `contributions.svg` |
 | `profile/README.md` | Complete profile README to copy into the profile repository |
 | `.github/workflows/main.yml` | Runs daily at 00:05 UTC, on push to `master`, or manually |
 

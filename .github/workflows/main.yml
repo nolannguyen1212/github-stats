@@ -35,7 +35,7 @@ jobs:
         python3 -m pip install --upgrade pip setuptools wheel
         python3 -m pip install -r requirements.txt
 
-    # Generate the terminal-style overview and languages cards
+    # Generate the terminal-style SVG cards
     - name: Generate images
       run: |
         python3 --version
@@ -46,15 +46,6 @@ jobs:
         EXCLUDED: ${{ secrets.EXCLUDED }}
         EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
         EXCLUDE_FORKED_REPOS: true
-
-    # Contribution snake in Matrix green (dark) plus a light fallback
-    - name: Generate contribution snake
-      uses: Platane/snk@v3
-      with:
-        github_user_name: ${{ github.repository_owner }}
-        outputs: |
-          generated/snake-dark.svg?color_snake=#00ff41&color_dots=#0f1a10,#0b3d17,#00792a,#00b33a,#00ff41
-          generated/snake-light.svg?color_snake=#00792a&color_dots=#ebedf0,#b6f5c4,#5fd17a,#1f9e45,#0b5d24
 
     # Commit all changed files to the repository
     - name: Commit to the repo
