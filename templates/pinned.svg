@@ -1,0 +1,48 @@
+<svg xml:space="preserve" width="980" height="{{ height }}" viewBox="0 0 980 {{ height }}" xmlns="http://www.w3.org/2000/svg">
+<style>
+text {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  fill: #00ff41;
+  white-space: pre;
+}
+.title  { fill: #7dff9a; font-size: 12px; }
+.prompt { fill: #00ff41; font-weight: 700; }
+.cmd    { fill: #d8ffe0; }
+.name   { fill: #00ff41; font-weight: 700; font-size: 14px; }
+.tag    { fill: #3c8c4b; font-size: 11px; }
+.desc   { fill: #b6ffc6; font-size: 12px; }
+.meta   { fill: #00c72c; font-size: 12px; }
+.dim    { fill: #3c8c4b; }
+.card   { fill: #0d160e; stroke: #00ff41; stroke-opacity: 0.28; }
+
+.line {
+  opacity: 0;
+  animation: boot 0.4s ease-out forwards;
+}
+@keyframes boot {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cursor { animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+</style>
+<defs>
+  <clipPath id="frame"><rect x="1" y="1" width="978" height="{{ inner_height }}" rx="10" /></clipPath>
+</defs>
+
+<g clip-path="url(#frame)">
+  <rect width="980" height="{{ height }}" fill="#0a0f0a" />
+  <rect width="980" height="30" fill="#0f1a10" />
+</g>
+<rect x="0.5" y="0.5" width="979" height="{{ border_height }}" rx="10" fill="none" stroke="#00ff41" stroke-opacity="0.35" />
+<line x1="0" y1="30" x2="980" y2="30" stroke="#00ff41" stroke-opacity="0.2" />
+<circle cx="18" cy="15" r="5.5" fill="#ff5f56" />
+<circle cx="36" cy="15" r="5.5" fill="#ffbd2e" />
+<circle cx="54" cy="15" r="5.5" fill="#27c93f" />
+<text class="title" x="490" y="19" text-anchor="middle">{{ login }}@github: ~/pinned</text>
+
+<text x="22" y="56" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">gh repo list {{ login }} --pinned</tspan></text>
+{{ cards }}
+</svg>

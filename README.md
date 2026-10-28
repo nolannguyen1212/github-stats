@@ -20,10 +20,12 @@ Fork từ [jstrieb/github-stats](https://github.com/jstrieb/github-stats)
 |---|---|
 | `templates/overview.svg` | Template card thống kê (stars, forks, contributions, lines changed, views, repos) |
 | `templates/languages.svg` | Template card ngôn ngữ — top 6, dạng thanh ASCII `█░` |
+| `templates/pinned.svg` | Lưới card cho các repo đang pin trên profile (tối đa 6, tự cập nhật khi đổi pin) |
+| `templates/contributions.svg` | Heatmap contribution 1 năm + current/longest streak, best day |
 | `generate_images.py` | Điền số liệu vào template → `generated/*.svg` |
 | `github_stats.py` | Gọi GitHub GraphQL/REST API để lấy số liệu |
 | `assets/header.svg` | Banner terminal có hiệu ứng gõ chữ (tĩnh, tự sửa nội dung) |
-| `generated/` | Output do Actions commit: `overview.svg`, `languages.svg`, `snake-dark.svg`, `snake-light.svg` |
+| `generated/` | Output do Actions commit: `overview.svg`, `languages.svg`, `pinned.svg`, `contributions.svg`, `snake-dark.svg`, `snake-light.svg` |
 | `profile/README.md` | README hoàn chỉnh để copy sang repo profile |
 | `.github/workflows/main.yml` | Chạy mỗi ngày 00:05 UTC, khi push lên `master`, hoặc chạy tay |
 
@@ -81,10 +83,18 @@ nhưng một số tài khoản/org vẫn chặn ở mức repo.)
 3. Sửa các chỗ placeholder:
    - email / LinkedIn trong hàng badge đầu trang
    - khối `nolan.yaml` (role, domains, learning…)
-   - bảng `~/projects` — thay `project-one/two/three` bằng repo thật
    - danh sách badge `~/stack` cho đúng công nghệ bạn dùng
 
 ## Tuỳ chỉnh
+
+**Pinned repos** — không cần sửa code: đổi pin trên trang profile GitHub, lần
+chạy workflow tiếp theo sẽ vẽ lại `pinned.svg`. Card lấy dữ liệu từ chính danh
+sách pin, nên đừng bỏ pin; các ô pin mặc định của GitHub vẫn hiện bên dưới
+README và không đổi giao diện được.
+
+**Cài đặt profile nên bật** (Settings → Public profile): *Include private
+contributions on my profile* để heatmap đầy đủ hơn; tắt *Show Achievements* để
+sidebar gọn hơn.
 
 **Header banner** — sửa text trong `assets/header.svg`. Mỗi dòng được "gõ" ra
 bằng cách animate độ rộng của một `clipPath`; nếu dòng lệnh dài hơn, tăng giá

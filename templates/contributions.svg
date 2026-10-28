@@ -1,0 +1,67 @@
+<svg xml:space="preserve" width="980" height="230" viewBox="0 0 980 230" xmlns="http://www.w3.org/2000/svg">
+<style>
+text {
+  font-family: "JetBrains Mono", "Fira Code", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  fill: #00ff41;
+  white-space: pre;
+}
+.title  { fill: #7dff9a; font-size: 12px; }
+.prompt { fill: #00ff41; font-weight: 700; }
+.cmd    { fill: #d8ffe0; }
+.axis   { fill: #3c8c4b; font-size: 10px; }
+.key    { fill: #3c8c4b; font-size: 11px; }
+.val    { fill: #b6ffc6; font-size: 14px; font-weight: 700; }
+
+.l0 { fill: #132015; }
+.l1 { fill: #0b3d17; }
+.l2 { fill: #00792a; }
+.l3 { fill: #00b33a; }
+.l4 { fill: #00ff41; }
+.today { stroke: #d8ffe0; stroke-width: 1; }
+
+.col, .line {
+  opacity: 0;
+  animation: boot 0.4s ease-out forwards;
+}
+@keyframes boot {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+</style>
+<defs>
+  <clipPath id="frame"><rect x="1" y="1" width="978" height="228" rx="10" /></clipPath>
+</defs>
+
+<g clip-path="url(#frame)">
+  <rect width="980" height="230" fill="#0a0f0a" />
+  <rect width="980" height="30" fill="#0f1a10" />
+</g>
+<rect x="0.5" y="0.5" width="979" height="229" rx="10" fill="none" stroke="#00ff41" stroke-opacity="0.35" />
+<line x1="0" y1="30" x2="980" y2="30" stroke="#00ff41" stroke-opacity="0.2" />
+<line x1="812" y1="76" x2="812" y2="214" stroke="#00ff41" stroke-opacity="0.15" />
+<circle cx="18" cy="15" r="5.5" fill="#ff5f56" />
+<circle cx="36" cy="15" r="5.5" fill="#ffbd2e" />
+<circle cx="54" cy="15" r="5.5" fill="#27c93f" />
+<text class="title" x="490" y="19" text-anchor="middle">{{ login }}@github: ~/activity</text>
+
+<text x="22" y="56" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">git log --author={{ login }} --since="1 year ago" | heatmap</tspan></text>
+
+<text class="axis" x="22" y="{{ mon_y }}">Mon</text>
+<text class="axis" x="22" y="{{ wed_y }}">Wed</text>
+<text class="axis" x="22" y="{{ fri_y }}">Fri</text>
+{{ months }}
+{{ grid }}
+
+<g class="line" style="animation-delay: 900ms">
+  <text class="axis" x="52" y="211">less</text>
+  <rect class="l0" x="80" y="202" width="10" height="10" rx="2" />
+  <rect class="l1" x="94" y="202" width="10" height="10" rx="2" />
+  <rect class="l2" x="108" y="202" width="10" height="10" rx="2" />
+  <rect class="l3" x="122" y="202" width="10" height="10" rx="2" />
+  <rect class="l4" x="136" y="202" width="10" height="10" rx="2" />
+  <text class="axis" x="154" y="211">more</text>
+</g>
+
+{{ summary }}
+</svg>

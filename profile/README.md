@@ -61,7 +61,9 @@ principles:
 <a href="https://github.com/nolannguyen1212/github-stats"><img src="https://raw.githubusercontent.com/nolannguyen1212/github-stats/master/generated/languages.svg" alt="Top languages" width="49%" /></a>
 </p>
 
-### `$ git log --graph --since="1 year ago"`
+### `$ git log --since="1 year ago" | heatmap`
+
+<a href="https://github.com/nolannguyen1212"><img src="https://raw.githubusercontent.com/nolannguyen1212/github-stats/master/generated/contributions.svg" alt="contribution heatmap" width="100%" /></a>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nolannguyen1212/github-stats/master/generated/snake-dark.svg" />
@@ -69,13 +71,10 @@ principles:
   <img alt="contribution snake" src="https://raw.githubusercontent.com/nolannguyen1212/github-stats/master/generated/snake-dark.svg" width="100%" />
 </picture>
 
-### `$ ls ~/projects --pinned`
+### `$ gh repo list --pinned`
 
-| repo | what it does | stack |
-|---|---|---|
-| [`project-one`](https://github.com/nolannguyen1212/project-one) | Distributed KV store on Raft — linearizable reads, snapshotting, dynamic membership | `Go` `gRPC` `BoltDB` |
-| [`project-two`](https://github.com/nolannguyen1212/project-two) | Event-driven order pipeline with exactly-once semantics via outbox + idempotent consumers | `Go` `Kafka` `PostgreSQL` |
-| [`project-three`](https://github.com/nolannguyen1212/project-three) | Token-bucket rate limiter as a sidecar, backed by Redis with Lua scripts | `Go` `Redis` `Envoy` |
+<!-- Tự cập nhật theo các repo bạn pin trên profile (tối đa 6) -->
+<a href="https://github.com/nolannguyen1212?tab=repositories"><img src="https://raw.githubusercontent.com/nolannguyen1212/github-stats/master/generated/pinned.svg" alt="pinned repositories" width="100%" /></a>
 
 <div align="center">
 

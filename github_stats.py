@@ -244,6 +244,59 @@ query {{
 }}
 """
 
+    @staticmethod
+    def pinned_repos() -> str:
+        """
+        :return: GraphQL query to get the repositories pinned on the profile
+        """
+        return """
+query {
+  viewer {
+    pinnedItems(first: 6, types: REPOSITORY) {
+      nodes {
+        ... on Repository {
+          name
+          description
+          isPrivate
+          isArchived
+          stargazerCount
+          forkCount
+          pushedAt
+          primaryLanguage {
+            name
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
+    @staticmethod
+    def contrib_calendar() -> str:
+        """
+        :return: GraphQL query to get the daily contribution calendar for the
+        past year
+        """
+        return """
+query {
+  viewer {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks {
+          contributionDays {
+            date
+            contributionCount
+            contributionLevel
+          }
+        }
+      }
+    }
+  }
+}
+"""
+
 
 class Stats(object):
     """
