@@ -41,9 +41,9 @@ text {
 <circle cx="18" cy="15" r="5.5" fill="#ff5f56" />
 <circle cx="36" cy="15" r="5.5" fill="#ffbd2e" />
 <circle cx="54" cy="15" r="5.5" fill="#27c93f" />
-<text class="title" x="490" y="19" text-anchor="middle">nolannguyen1212@github: ~/pinned</text>
+<text class="title" x="490" y="19" text-anchor="middle">natalieconan@github: ~/pinned</text>
 
-<text x="22" y="56" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">gh repo list nolannguyen1212 --pinned</tspan></text>
+<text x="22" y="56" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">gh repo list natalieconan --pinned</tspan></text>
 
 <g class="line" style="animation-delay: 120ms">
 <rect class="card" x="22" y="74" width="460" height="118" rx="6" />
@@ -58,7 +58,7 @@ text {
 <text class="name" x="514" y="102">▸ media-notes</text>
 <text class="tag" x="942" y="101" text-anchor="end">[public]</text>
 <text class="desc" x="514" y="126">AI-powered media transcription and summarization platform</text>
-<text class="meta" x="514" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>5d ago</tspan></text>
+<text class="meta" x="514" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>6d ago</tspan></text>
 </g>
 
 <g class="line" style="animation-delay: 360ms">
