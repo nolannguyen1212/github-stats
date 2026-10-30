@@ -50,7 +50,7 @@ text {
 <text class="name" x="38" y="102">▸ memkv</text>
 <text class="tag" x="466" y="101" text-anchor="end">[public]</text>
 <text class="desc" x="38" y="126">In-memory key value database</text>
-<text class="meta" x="38" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>18d ago</tspan></text>
+<text class="meta" x="38" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>19d ago</tspan></text>
 </g>
 
 <g class="line" style="animation-delay: 240ms">
@@ -58,7 +58,7 @@ text {
 <text class="name" x="514" y="102">▸ media-notes</text>
 <text class="tag" x="942" y="101" text-anchor="end">[public]</text>
 <text class="desc" x="514" y="126">AI-powered media transcription and summarization platform</text>
-<text class="meta" x="514" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>6d ago</tspan></text>
+<text class="meta" x="514" y="176"><tspan>● Go</tspan><tspan class="dim">   ★ </tspan><tspan>0</tspan><tspan class="dim">   ⑂ </tspan><tspan>0</tspan><tspan class="dim">   ↻ </tspan><tspan>7d ago</tspan></text>
 </g>
 
 <g class="line" style="animation-delay: 360ms">

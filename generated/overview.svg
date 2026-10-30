@@ -57,7 +57,7 @@ text {
 <text x="30" y="99" class="line" style="animation-delay: 240ms"><tspan class="key">forks</tspan><tspan class="dots"> ................. </tspan><tspan class="val">0</tspan></text>
 <text x="30" y="120" class="line" style="animation-delay: 360ms"><tspan class="key">contributions</tspan><tspan class="dots"> ......... </tspan><tspan class="val">2,395</tspan></text>
 <text x="30" y="141" class="line" style="animation-delay: 480ms"><tspan class="key">lines_changed</tspan><tspan class="dots"> ......... </tspan><tspan class="val">+0 / -0</tspan></text>
-<text x="30" y="162" class="line" style="animation-delay: 600ms"><tspan class="key">views_14d</tspan><tspan class="dots"> ............. </tspan><tspan class="val">22</tspan></text>
+<text x="30" y="162" class="line" style="animation-delay: 600ms"><tspan class="key">views_14d</tspan><tspan class="dots"> ............. </tspan><tspan class="val">26</tspan></text>
 <text x="30" y="183" class="line" style="animation-delay: 720ms"><tspan class="key">repos_contributed</tspan><tspan class="dots"> ..... </tspan><tspan class="val">25</tspan></text>
 
 <text x="18" y="207" class="line" style="animation-delay: 840ms"><tspan class="prompt">$ </tspan><tspan class="cursor">█</tspan></text>
