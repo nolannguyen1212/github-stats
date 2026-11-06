@@ -54,12 +54,12 @@ text {
 <text class="title" x="240" y="18" text-anchor="middle">natalieconan@github: ~/langs</text>
 
 <text x="18" y="54" class="line"><tspan class="prompt">$ </tspan><tspan class="cmd">tokei --sort bytes ~/repos | head -6</tspan></text>
-<text x="30" y="78" class="line" style="animation-delay: 120ms"><tspan class="lang">Go          </tspan> <tspan class="bar">████████████</tspan><tspan class="track">░░░░░░░░░░░░</tspan> <tspan class="pct"> 50.09%</tspan></text>
-<text x="30" y="99" class="line" style="animation-delay: 240ms"><tspan class="lang">Python      </tspan> <tspan class="bar">██████</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct"> 25.05%</tspan></text>
-<text x="30" y="120" class="line" style="animation-delay: 360ms"><tspan class="lang">TypeScript  </tspan> <tspan class="bar">████</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct"> 15.20%</tspan></text>
-<text x="30" y="141" class="line" style="animation-delay: 480ms"><tspan class="lang">Lua         </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  2.13%</tspan></text>
-<text x="30" y="162" class="line" style="animation-delay: 600ms"><tspan class="lang">HTML        </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  2.06%</tspan></text>
-<text x="30" y="183" class="line" style="animation-delay: 720ms"><tspan class="lang">Makefile    </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  1.41%</tspan></text>
+<text x="30" y="78" class="line" style="animation-delay: 120ms"><tspan class="lang">Go          </tspan> <tspan class="bar">████████████</tspan><tspan class="track">░░░░░░░░░░░░</tspan> <tspan class="pct"> 48.70%</tspan></text>
+<text x="30" y="99" class="line" style="animation-delay: 240ms"><tspan class="lang">Python      </tspan> <tspan class="bar">███████</tspan><tspan class="track">░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct"> 27.11%</tspan></text>
+<text x="30" y="120" class="line" style="animation-delay: 360ms"><tspan class="lang">TypeScript  </tspan> <tspan class="bar">████</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct"> 14.78%</tspan></text>
+<text x="30" y="141" class="line" style="animation-delay: 480ms"><tspan class="lang">Lua         </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  2.07%</tspan></text>
+<text x="30" y="162" class="line" style="animation-delay: 600ms"><tspan class="lang">HTML        </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  2.00%</tspan></text>
+<text x="30" y="183" class="line" style="animation-delay: 720ms"><tspan class="lang">Makefile    </tspan> <tspan class="bar">█</tspan><tspan class="track">░░░░░░░░░░░░░░░░░░░░░░░</tspan> <tspan class="pct">  1.39%</tspan></text>
 
 <text x="18" y="207" class="line" style="animation-delay: 840ms"><tspan class="prompt">$ </tspan><tspan class="cursor">█</tspan></text>
 </svg>
